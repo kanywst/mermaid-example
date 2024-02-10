@@ -30,6 +30,22 @@ graph TD;
     C-->D;
 ```
 
+```markdown
+graph LR;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+```mermaid
+graph LR;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
 ## シーケンス図
 
 ```markdown
