@@ -1,41 +1,45 @@
 # Kubernetes
 
-```mermaid
-%%{ init: { 'flowchart': { 'curve': 'stepBefore' } } }%%
-flowchart LR
-    c(cloud)
-    subgraph M[Master]
-        cm(controller-manager)
-        ccm(cloud-controller-manager)
-        e(etcd)
-        as(api-server)
-        s(scheduler)
-        dns
+- https://kubernetes.io/ja/docs/concepts/architecture/
 
-        cm <--> as
-        ccm <--> as
-        e <--> as
-        as <--> s
-    end
-    subgraph W[Worker]
-        subgraph N_1[Node]
-            kp1(kube-porxy)
+```mermaid
+flowchart TD
+    subgraph C[Cluster]
+        subgraph CP[Controle Plane]
+            ccm(cloud-controller-manager)
+            e(etcd)
+            kas(kube-api-server)
+            s(scheduler)
+            cm(controller manager)
+
+            ccm <--> kas
+            e --> kas
+            s --> kas
+            cm --> kas
+        end
+        subgraph N_1[Node 1]
             kl1(kubelet)
-            cr1(Container Runtime)
+            kp1(kube-proxy)
+            subgraph CRI_1[ ]
+                p1(pod)
+                p2(pod)
+                p3(pod)
+            end
+            kl1 --> kas
+            kl1 --> CRI_1
+            kp1 --> CRI_1
         end
-        subgraph N_2[Node]
-            kp2(kube-porxy)
+        subgraph N_2[Node 2]
             kl2(kubelet)
-            cr2(Container Runtime)
-        end
-        subgraph N_3[Node]
-            kp3(kube-porxy)
-            kl3(kubelet)
-            cr3(Container Runtime)
+            kp2(kube-proxy)
+            subgraph CRI_2[ ]
+                p4(pod)
+            end
+            kl2 --> kas
+            kl2 --> CRI_2
+            kp2 --> CRI_2
         end
     end
-    ccm --> c
-    as --- N_1
-    as --- N_2
-    as --- N_3
+    cpa(Clou Provider API)
+    ccm --> cpa
 ```
