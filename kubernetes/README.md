@@ -2,7 +2,7 @@
 
 ```mermaid
 %%{ init: { 'flowchart': { 'curve': 'stepBefore' } } }%%
-flowchart TB
+flowchart LR
     c(cloud)
     subgraph M[Master]
         cm(controller-manager)
